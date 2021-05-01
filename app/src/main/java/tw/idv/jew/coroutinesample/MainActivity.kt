@@ -85,4 +85,22 @@ class MainActivity : AppCompatActivity() {
     private fun someCalculation() {
         println("someCalculation")
     }
+
+    //Dispatchers
+    suspend fun getResultSuspend(){
+        //api call here
+        val api = Api()
+        val result = api.getData("para1", "para2")
+        //update UI here
+        updateUI(result)
+    }
+    suspend fun Api.getData(para1: String, para2: String) =
+        withContext(Dispatchers.IO){
+            delay(500)
+            return@withContext listOf<String>()
+        }
+    suspend fun updateUI(list: List<String>) =
+        withContext(Dispatchers.Main){
+            //update view here
+        }
 }
