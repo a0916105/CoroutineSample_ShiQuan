@@ -2,6 +2,7 @@ package tw.idv.jew.coroutinesample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -15,6 +16,11 @@ class MainActivity : AppCompatActivity() {
             updateWithDelay()
         }
         updateWithoutDelay()
+
+        //lifecycleScope
+        lifecycleScope.launch {
+            //Call suspend function here
+        }
     }
 
     suspend fun updateWithDelay(){
