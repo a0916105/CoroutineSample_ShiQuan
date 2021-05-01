@@ -4,10 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,6 +77,20 @@ class MainActivity : AppCompatActivity() {
         runBlocking {
             //Collect the flow inside coroutine
             demoFlow().collect { println(it) }
+        }
+
+        //Catch
+        runBlocking {
+            flow {
+                for (i in 1..3){
+                    delay(100)
+                    emit(i) //emit new value
+                }
+            }
+                .map { it*2 }
+                .catch { println("catch:$it") }
+                .map { it*3 }
+                .collect { println(it) }
         }
     }
 
