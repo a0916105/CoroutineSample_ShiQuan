@@ -3,10 +3,7 @@ package tw.idv.jew.coroutinesample
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +39,31 @@ class MainActivity : AppCompatActivity() {
             }finally {
                 //release your resource here
             }
+        }
+
+        //CoroutineScope Builder
+        //Launch
+        GlobalScope.launch { delay(500) }
+        //Async
+        val deferred = GlobalScope.async {
+            delay(500)
+            return@async listOf<String>()
+        }
+//        val list = deferred.await()   //Should inside suspend function
+        //WithContext本身是suspend function，需放在Coroutine裡面
+        /*val list = withContext(Dispatchers.IO){
+            delay(500)
+            return@withContext listOf<String>()
+        }*/
+        //coroutineScope本身是suspend function，需放在Coroutine裡面
+        /*val list = coroutineScope {
+            delay(500)
+            return@coroutineScope listOf<String>()
+        }*/
+        //RunBlocking
+        fun getList(): List<String> = runBlocking {
+            delay(500)
+            return@runBlocking listOf<String>()
         }
     }
 
